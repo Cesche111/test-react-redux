@@ -26,8 +26,8 @@ const PostsView = ({posts}) => {
                 <TableHead>
                     <TableRow style={{backgroundColor: 'grey'}}>
                         <TableCell>ID</TableCell>
-                        <TableCell align="right">Title</TableCell>
-                        <TableCell align="right">Body</TableCell>
+                        <TableCell align="center">Title</TableCell>
+                        <TableCell align="center">Body</TableCell>
 
                     </TableRow>
                 </TableHead>
@@ -40,8 +40,8 @@ const PostsView = ({posts}) => {
                             <TableCell component="th" scope="row">
                                 {id}
                             </TableCell>
-                            <TableCell align="right">{title}</TableCell>
-                            <TableCell align="right">{body}</TableCell>
+                            <TableCell align="left">{title}</TableCell>
+                            <TableCell align="left">{body}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

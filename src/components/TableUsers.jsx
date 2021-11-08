@@ -31,8 +31,8 @@ const TableUsers = ({users, onClickUser}) => {
                 <TableHead>
                     <TableRow style={{backgroundColor: 'grey'}}>
                         <TableCell>Name</TableCell>
-                        <TableCell align="right">Email</TableCell>
-                        <TableCell align="right">Phone</TableCell>
+                        <TableCell align="center">Email</TableCell>
+                        <TableCell align="center">Phone</TableCell>
 
                     </TableRow>
                 </TableHead>
@@ -45,8 +45,8 @@ const TableUsers = ({users, onClickUser}) => {
                             <TableCell component="th" scope="row" onClick={(e) => clickHandler(name, id, e)}>
                                 <NavLink style={{textDecoration: 'none'}} to={`/posts/${id}`}>{name}</NavLink>
                             </TableCell>
-                            <TableCell align="right">{email}</TableCell>
-                            <TableCell align="right">{phone}</TableCell>
+                            <TableCell align="left">{email}</TableCell>
+                            <TableCell align="center">{phone}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
