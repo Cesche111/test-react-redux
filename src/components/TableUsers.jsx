@@ -3,8 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import { NavLink } from "react-router-dom";
 
 const TableUsers = React.memo(({ users, onClickUser }) => {
-  const handleClick = (e, id) => {
-    e.preventDefault();
+  const handleClick = (id) => {
     onClickUser(id);
   };
 
@@ -28,8 +27,12 @@ const TableUsers = React.memo(({ users, onClickUser }) => {
               <TableCell>
                 <NavLink 
                   to={`/posts/${user.id}`} 
-                  onClick={(e) => handleClick(e, user.id)}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  onClick={() => handleClick(user.id)}
+                  style={{ 
+                    textDecoration: 'none', 
+                    color: '#1976d2', 
+                    cursor: 'pointer' 
+                  }}
                 >
                   {user.name}
                 </NavLink>
