@@ -1,58 +1,47 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import {NavLink} from "react-router-dom";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { NavLink } from "react-router-dom";
 
+const TableUsers = React.memo(({ users, onClickUser }) => {
+  const handleClick = (e, id) => {
+    e.preventDefault();
+    onClickUser(id);
+  };
 
-const TableUsers = ({users, onClickUser}) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} size="small">
+        <TableHead>
+          <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+            <TableCell>Name</TableCell>
+            <TableCell align="center">Email</TableCell>
+            <TableCell align="center">Phone</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((user) => (
+            <TableRow
+              hover
+              key={user.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell>
+                <NavLink 
+                  to={`/posts/${user.id}`} 
+                  onClick={(e) => handleClick(e, user.id)}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  {user.name}
+                </NavLink>
+              </TableCell>
+              <TableCell align="left">{user.email}</TableCell>
+              <TableCell align="center">{user.phone}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+});
 
-    const clickHandler = (name, id, e) => {
-        e.preventDefault();
-        onClickUser(id);
-    }
-
-    const createData = (name, email, phone, id) => {
-        return {name, email, phone, id};
-    }
-
-    const rows = users.map((user) => {
-        return createData(user.name, user.email, user.phone, user.id)
-    });
-
-
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{minWidth: 650}} size="small" aria-label="a dense table">
-                <TableHead>
-                    <TableRow style={{backgroundColor: 'grey'}}>
-                        <TableCell>Name</TableCell>
-                        <TableCell align="center">Email</TableCell>
-                        <TableCell align="center">Phone</TableCell>
-
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map(({name, email, phone, id}) => (
-                        <TableRow
-                            key={name}
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                        >
-                            <TableCell component="th" scope="row" onClick={(e) => clickHandler(name, id, e)}>
-                                <NavLink style={{textDecoration: 'none'}} to={`/posts/${id}`}>{name}</NavLink>
-                            </TableCell>
-                            <TableCell align="left">{email}</TableCell>
-                            <TableCell align="center">{phone}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
-}
-
-export default React.memo(TableUsers)
+export default TableUsers;

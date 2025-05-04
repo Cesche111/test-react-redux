@@ -1,3 +1,4 @@
 export const POSTS_FETCHED = 'POSTS_FETCHED';
 export const POSTS_LOADING = 'POSTS_LOADING';
 export const SEARCH_POST = 'SEARCH_POST';
+export const POSTS_ERROR = 'POSTS_ERROR';

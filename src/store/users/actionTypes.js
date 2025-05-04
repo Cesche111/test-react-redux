@@ -2,3 +2,4 @@ export const USERS_FETCHED = 'USERS_FETCHED';
 export const USERS_LOADING = 'USERS_LOADING';
 export const ACTIVE_USERS_ID = 'ACTIVE_USERS_ID';
 export const SEARCH_BY_NAME = 'SEARCH_BY_NAME';
+export const USERS_ERROR = 'USERS_ERROR'; 

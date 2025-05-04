@@ -1,40 +1,35 @@
 import React from 'react';
-import {Link, Route} from 'react-router-dom';
-import '../App.css';
+import {Link, useLocation} from 'react-router-dom';
 import {AppBar, Tab, Tabs} from "@material-ui/core";
 import {useSelector} from "react-redux";
 
-
 const NavBar = () => {
-    const id = useSelector(state => state.users.activeUserId)
-    const routes = ["/", `/posts/${id}`];
-    return (<Route
-        path="/"
-        render={(history) => (
-            <AppBar>
-                <Tabs
-                    value={
-                        history.location.pathname !== "/"
-                            ? history.location.pathname
-                            : false
-                    }
-                >
-                    <Tab
-                        value={routes[0]}
-                        label="Users"
-                        component={Link}
-                        to={routes[0]}
-                    />
-                    <Tab
-                        value={routes[1]}
-                        label="Posts"
-                        component={Link}
-                        to={routes[1]}
-                    />
-                </Tabs>
-            </AppBar>
-        )}
-    />)
-}
+    const location = useLocation();
+    const activeUserId = useSelector(state => state.users.activeUserId);
+    
+    const activeTab = location.pathname.startsWith('/posts') 
+        ? `/posts/${activeUserId || ''}` 
+        : location.pathname;
 
-export default NavBar;
+    return (
+        <AppBar position="static">
+            <Tabs value={activeTab}>
+                <Tab 
+                    label="Users" 
+                    component={Link} 
+                    to="/" 
+                    value="/" 
+                />
+                <Tab 
+                    label="Posts" 
+                    component={Link} 
+                    to={`/posts/${activeUserId || ''}`} 
+                    value={`/posts/${activeUserId || ''}`} 
+                    disabled={!activeUserId}
+                />
+            </Tabs>
+        </AppBar>
+    );
+};
+
+export default React.memo(NavBar);

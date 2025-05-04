@@ -1,48 +1,38 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchUsers, setActiveUser} from '../store/users/actions';
+import {fetchUsers, setActiveUser, searchByName} from '../store/users/actions';
 import TableUsers from '../components/TableUsers';
 import Search from '../components/Search';
-
 
 const URL = `https://jsonplaceholder.typicode.com/users`;
 
 const Users = () => {
-
-    const {users, isLoading, searchName} = useSelector(state => state.users)
-    const dispatch = useDispatch()
-
+    const {users, isLoading, searchName, hasErrored} = useSelector(state => state.users);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchUsers(URL))
-    }, [dispatch])
+        dispatch(fetchUsers(URL));
+    }, [dispatch]);
 
-    const handlePostsDispatch = (id) => {
-        dispatch(setActiveUser(id))
-    }
+    const handlePostsDispatch = (id) => dispatch(setActiveUser(id));
 
-    const searchedUsers = searchName.length
-        ? users.filter((user) => user.name.toLowerCase().includes(searchName.toLowerCase()))
-        : users
+    const searchedUsers = searchName 
+        ? users.filter(user => user.name.toLowerCase().includes(searchName.toLowerCase()))
+        : users;
 
-
-    if (users.hasErrored) {
-        return <p>Sorry! There was an error loading the items</p>;
-    }
-
-    if (isLoading) {
-        return <p>Loading…</p>;
-    }
+    if (hasErrored) return <p>Error loading users</p>;
+    if (isLoading) return <p>Loading...</p>;
 
     return (
         <div style={{marginTop: "10vh"}}>
             USERS
-            <div>
-                <Search/>
-            </div>
+            <Search 
+                action={searchByName} 
+                selector={state => state.users.searchName} 
+            />
             <TableUsers users={searchedUsers} onClickUser={handlePostsDispatch}/>
         </div>
-    )
-}
+    );
+};
 
-export default React.memo(Users)
+export default React.memo(Users);

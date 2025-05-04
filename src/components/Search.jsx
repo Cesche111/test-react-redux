@@ -1,35 +1,25 @@
-import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {searchByName} from '../store/users/actions';
+const Search = ({action, selector}) => {
+    const searchText = useSelector(selector);
+    const dispatch = useDispatch();
 
-
-const Search = () => {
-
-    const searchText = useSelector(state => state.users.searchName);
-    const dispatch = useDispatch()
-
-    const handleChange = (event) => {
-        dispatch(searchByName(event.target.value))
-    }
-
-
-    const handleClick = () => {
-        dispatch(searchByName(""))
-    }
+    const handleChange = (e) => dispatch(action(e.target.value));
+    const handleClear = () => dispatch(action(''));
 
     return (
-        <>
+        <div className="search-wrapper">
             <input
-                onChange={handleChange}
                 type="text"
                 placeholder="Search"
                 value={searchText}
+                onChange={handleChange}
                 className="Search"
             />
-            <button onClick={handleClick}>✕</button>
-        </>
-    )
-}
+            <button onClick={handleClear}>✕</button>
+        </div>
+    );
+};
 
-export default Search
+export default React.memo(Search);
